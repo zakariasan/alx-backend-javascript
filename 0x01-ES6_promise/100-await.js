@@ -2,12 +2,13 @@ import { uploadPhoto, createUser } from './utils';
 
 export default async function asyncUploadUser() {
   let every = {};
+
   try {
-    const photos = await uploadPhoto();
-    const users = await createUser();
-    every =  { photos, users };
+    const photo = await uploadPhoto();
+    const user = await createUser();
+    every = { photo, user };
   } catch (err) {
-    every =  { photo: null, user: null };
+    every = { photo: null, user: null };
   }
   return every;
 }
