@@ -1,7 +1,7 @@
 function getListStudentIds(obj) {
-  if (!( typeof obj === 'object')) {
+  if (!(typeof obj === 'object')) {
     return [];
   }
-  return obj.map(item => item.id);
+  return obj.map((item) => item.id);
 }
 export default getListStudentIds;
