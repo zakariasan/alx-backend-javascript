@@ -1,4 +1,4 @@
-function getStudentIdsSum(obj, city) {
+function getStudentIdsSum(obj) {
   if (!(typeof obj === 'object')) {
     return [];
   }
