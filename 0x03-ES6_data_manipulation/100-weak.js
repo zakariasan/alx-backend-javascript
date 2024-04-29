@@ -8,7 +8,6 @@ export function queryAPI(endpoint) {
     if (count >= 4) {
       throw new Error('Endpoint load is high');
     }
-    count = count + 1;
-    weakMap.set(endpoint, count);
+    weakMap.set(endpoint, count + 1);
   }
 }
