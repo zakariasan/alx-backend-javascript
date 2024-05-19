@@ -6,15 +6,9 @@ import {
   ClassRoom,
   initializeRooms,
 } from "./testing.js";
+import Airport from "./7-airport.js";
 
-const b = new Building(100);
-console.log(b);
+const airportSF = new Airport('San Francisco Airport', 'SFO');
+console.log(airportSF);
+console.log(airportSF.toString());
 
-class TestBuilding extends Building {}
-
-try {
-    new TestBuilding(200)
-}
-catch(err) {
-    console.log(err);
-}

@@ -1,23 +1,4 @@
-class SkyHighBuilding extends Building {
-  constructor(sqft, floors) {
-    super(sqft);
-    this._floors = floors;
-  }
 
-  get floors() {
-    return this._floors;
-  }
-
-  set floors(value) {
-    if (typeof value !== "number") {
-      throw new Error("floors must be a number");
-    }
-    this._floors = value;
-  }
-  evacuationWarningMessage() {
-    return `Evacuate slowly the ${this._floors} floors`;
-  }
-}
 class Building {
   constructor(sqft) {
     if (this.constructor !== Building) {
@@ -40,6 +21,27 @@ class Building {
       throw TypeError("sqft must be a Number");
     }
     this._sqft = value;
+  }
+}
+
+class SkyHighBuilding extends Building {
+  constructor(sqft, floors) {
+    super(sqft);
+    this._floors = floors;
+  }
+
+  get floors() {
+    return this._floors;
+  }
+
+  set floors(value) {
+    if (typeof value !== "number") {
+      throw new Error("floors must be a number");
+    }
+    this._floors = value;
+  }
+  evacuationWarningMessage() {
+    return `Evacuate slowly the ${this._floors} floors`;
   }
 }
 
