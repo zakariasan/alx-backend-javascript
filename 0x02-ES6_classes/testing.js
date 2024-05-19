@@ -1,3 +1,38 @@
+class Pricing {
+  constructor(amount, currency) {
+    this._amount = amount;
+    this._currency = currency;
+  }
+
+  get amount() {
+    return this._amount;
+  }
+  get currency() {
+    return this._currency;
+  }
+
+  set amount(value) {
+    if (!typeof value !== "Number") {
+      throw new TypeError("amount must be a Number");
+    }
+    this._amount = value;
+  }
+  set currency(value) {
+    if ((!value) instanceof Currency) {
+      throw new TypeError("currency must be a Currency");
+    }
+    this._currency = value;
+  }
+  displayFullPrice() {
+    return `${this._amount} ${this._currency.name} (${this._currency.code})`;
+  }
+  convertPrice(amount, conversionRate) {
+    if (typeof amount !== 'number' && typeof conversionRate !== 'number') {
+      throw new TypeError('amount and conversionRate must be a Number');
+    }
+    return amount * conversionRate;
+  }
+}
 class Currency {
   constructor(code, name) {
     this._code = code;
@@ -80,4 +115,4 @@ class HolbertonCourse {
   }
 }
 
-export { Currency, HolbertonCourse, ClassRoom, initializeRooms };
+export { Pricing, Currency, HolbertonCourse, ClassRoom, initializeRooms };
