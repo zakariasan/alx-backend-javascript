@@ -1,3 +1,28 @@
+class Building {
+  constructor(sqft) {
+    if (this.constructor !== Building) {
+      const p = Object.getOwnPropertyNames(this.constructor.prototype);
+      if (p.includes("evacuationWarningMessage")) {
+        throw new Error(
+          "Class extending Building must override evacuationWarningMessage",
+        );
+      }
+    }
+    this._sqft = sqft;
+  }
+
+  get sqft() {
+    return (this._sqft = this.sqft);
+  }
+
+  set sqft(value) {
+    if (typeof value !== "number") {
+      throw TypeError("sqft must be a Number");
+    }
+    this._sqft = value;
+  }
+}
+
 class Pricing {
   constructor(amount, currency) {
     this._amount = amount;
@@ -27,8 +52,8 @@ class Pricing {
     return `${this._amount} ${this._currency.name} (${this._currency.code})`;
   }
   convertPrice(amount, conversionRate) {
-    if (typeof amount !== 'number' && typeof conversionRate !== 'number') {
-      throw new TypeError('amount and conversionRate must be a Number');
+    if (typeof amount !== "number" && typeof conversionRate !== "number") {
+      throw new TypeError("amount and conversionRate must be a Number");
     }
     return amount * conversionRate;
   }
@@ -115,4 +140,11 @@ class HolbertonCourse {
   }
 }
 
-export { Pricing, Currency, HolbertonCourse, ClassRoom, initializeRooms };
+export {
+  Building,
+  Pricing,
+  Currency,
+  HolbertonCourse,
+  ClassRoom,
+  initializeRooms,
+};

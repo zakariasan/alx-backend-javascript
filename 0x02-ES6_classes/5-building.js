@@ -1,13 +1,13 @@
 export default class Building {
   constructor(sqft) {
-    if (this.constructor === Building) {
-      throw new Error('Abstract classes cannot be instantiated');
+    if (this.constructor !== Building) {
+      const ouissal = Object.getOwnPropertyNames(this.constructor.prototype);
+      if (!ouissal.includes('evacuationWarningMessage')) {
+        throw new Error(
+          'Class extending Building must override evacuationWarningMessage',
+        );
+      }
     }
-
-    if (!this.constructor.prototype.hasOwnProperty('evacuationWarningMessage')) {
-      throw new Error('Class extending Building must override evacuationWarningMessage');
-    }
-
     this._sqft = sqft;
   }
 
