@@ -1,42 +1,57 @@
-interface Student {
-  firstName: string;
-  lastNmae: string;
-  age: number;
-  location: string;
+interface DirectorInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workDirectorTasks(): string;
 }
 
-const student1: Student = {
-  firstName: 'Zakaria',
-  lastNmae: 'Haouzan',
-  age:28,
-  location: 'Ouarzazate'
-};
-
-const student2: Student = {
-  firstName: 'Ouissal',
-  lastNmae: 'Abekhti',
-  age:25,
-  location: 'Marrakech'
-};
-
-const studentsList: Student[] = [student1, student2];
-
-function renderTable() {
-  const table = document.createElement('table');
-  const tbody = document.createElement('tbody');
-
-  studentsList.forEach((stu) => {
-    const row = document.createElement('tr');
-    const fName = document.createElement('td');
-    const location = document.createElement('td');
-
-    fName.textContent = stu.firstName;
-    location.textContent = stu.location;
-    row.appendChild(fName);
-    row.appendChild(location);
-    tbody.appendChild(row);
-  });
-  table.append(tbody);
-  document.body.appendChild(table);
+interface TeacherInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workTeacherTasks(): string;
 }
-renderTable();
+
+class Director implements DirectorInterface {
+  workFromHome = (): string => "Working from home";
+  getCoffeeBreak = (): string => "Getting a coffee break";
+  workDirectorTasks = (): string => "Getting to director tasks";
+}
+
+class Teacher implements TeacherInterface {
+  workFromHome = (): string => "Working from home";
+  getCoffeeBreak = (): string => "Getting a coffee break";
+  workTeacherTasks = (): string => "Getting to work";
+}
+
+function createEmployee(salary: number | string): Director | Teacher {
+  if (typeof salary === "number" && salary < 500) {
+    return new Teacher();
+  }
+  return new Director();
+}
+
+console.log(createEmployee(200));
+console.log(createEmployee(1000));
+console.log(createEmployee("$500"));
+
+function isDirector(employee: any): boolean {
+  return employee instanceof Director;
+}
+
+function executeWork(employee: Director | Teacher) {
+  if (employee instanceof Director) {
+    console.log(employee.workDirectorTasks());
+  } else {
+    console.log(employee.workTeacherTasks());
+  }
+}
+
+executeWork(createEmployee(200));
+executeWork(createEmployee(1000));
+
+type Subjects = "Math" | "History";
+
+function teachClass(todayClass: Subjects) {
+  console.log(`Teaching ${todayClass}`);
+}
+teachClass('Math');
+teachClass('History');
