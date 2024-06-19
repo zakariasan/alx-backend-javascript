@@ -12,7 +12,7 @@ function countStudents(path) {
     }
 
     // Remove the header line
-    const header = lines.shift();
+    lines.shift();
 
     // Initialize student count and field-based collections
     const fieldCounts = {};
@@ -20,7 +20,7 @@ function countStudents(path) {
 
     // Process each line
     lines.forEach((line) => {
-      const [firstname, lastname, age, field] = line.split(',');
+      const [firstname, _lastname, _age, field] = line.split(',');
       if (!field) return;
 
       if (!fieldCounts[field]) {
@@ -51,4 +51,3 @@ function countStudents(path) {
 }
 
 module.exports = countStudents;
-
