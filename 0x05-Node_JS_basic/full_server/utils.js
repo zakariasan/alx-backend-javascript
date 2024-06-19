@@ -1,41 +1,45 @@
 import fs from 'fs';
 
 /**
- * Reads the data of students in a CSV data file.
- * @param {string} dataPath - Path to the CSV data file.
- * @returns {Promise<Object>} - Promise that resolves to an object containing arrays of students per field.
+ * Reads the database asynchronously.
+ * @param {string} filePath - The path to the CSV database file.
+ * @returns {Promise<object>} A promise resolving to an object of arrays of first names per fields.
  */
-const readDatabase = (dataPath) => new Promise((resolve, reject) => {
-  if (!dataPath) {
-    reject(new Error('Cannot load the database: No file path provided.'));
+const readDatabase = (filePath) => new Promise((resolve, reject) => {
+  if (!filePath) {
+    reject(new Error('File path is missing.'));
     return;
   }
 
-  fs.readFile(dataPath, 'utf-8', (err, data) => {
+  fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
-      reject(new Error(`Cannot load the database: ${err.message}`));
+      reject(new Error(`Cannot read database file: ${err.message}`));
       return;
     }
 
-    const fileLines = data.trim().split('\n');
-    const studentGroups = {};
-    const dbFieldNames = fileLines[0].split(',');
-    const studentPropNames = dbFieldNames.slice(0, dbFieldNames.length - 1);
+    const lines = data.trim().split('\n');
+    const fieldNames = lines[0].split(',');
+    const students = {};
 
-    for (const line of fileLines.slice(1)) {
-      const studentRecord = line.split(',');
-      const studentProps = {};
-      for (let i = 0; i < studentPropNames.length; i++) {
-        studentProps[studentPropNames[i]] = studentRecord[i];
+    // Initialize student groups for each field
+    fieldNames.forEach((fieldName, index) => {
+      if (index < fieldNames.length - 1) {
+        students[fieldName] = [];
       }
-      const field = studentRecord[studentRecord.length - 1];
-      if (!studentGroups[field]) {
-        studentGroups[field] = [];
+    });
+
+    // Parse each line and add student first names to respective fields
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].split(',');
+      const firstName = line[0].trim();
+      const field = line[line.length - 1].trim();
+
+      if (students[field]) {
+        students[field].push(firstName);
       }
-      studentGroups[field].push(studentProps);
     }
 
-    resolve(studentGroups);
+    resolve(students);
   });
 });
 
