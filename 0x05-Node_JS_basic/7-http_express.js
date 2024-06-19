@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs').promises;
-const path = require('path');
 
 const app = express();
 const PORT = 1245;
@@ -8,8 +7,7 @@ const PORT = 1245;
 const countStudents = async (filePath) => {
   try {
     const data = await fs.readFile(filePath, 'utf-8');
-    const lines = data.split('\n').filter(line => line.trim() !== '').slice(1);
-    
+    const lines = data.split('\n').filter((line) => line.trim() !== '').slice(1);
     const fields = {};
     let totalStudents = 0;
 
@@ -28,7 +26,6 @@ const countStudents = async (filePath) => {
     for (const [field, students] of Object.entries(fields)) {
       output += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
     }
-    
     return output.trim();
   } catch (err) {
     throw new Error('Cannot load the database');
