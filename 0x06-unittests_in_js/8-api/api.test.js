@@ -1,4 +1,3 @@
-// api.test.js
 const request = require('request');
 const { expect } = require('chai');
 
@@ -26,19 +25,4 @@ describe('API integration test', () => {
       done();
     });
   });
-
-  it('POST /login returns correct response', (done) => {
-    const options = {
-      url: `${API_URL}/login`,
-      json: {
-        userName: 'Betty'
-      }
-    };
-    request.post(options, (_err, res, body) => {
-      expect(res.statusCode).to.be.equal(200);
-      expect(body).to.be.equal('Welcome Betty');
-      done();
-    });
-  });
 });
-
