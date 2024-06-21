@@ -1,20 +1,20 @@
 {
-  "type": "commonjs",
-  "name": "0x06-unittests_in_js",
+  "name": "8-api",
   "version": "1.0.0",
-  "description": "unittest in js try to fix again",
-  "main": "api.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint",
-    "check-lint": "./node_modules/.bin/eslint [0-9]*.js",
-    "dev": "npx babel-node",
-    "test": "mocha",
-    "full-test": "./node_modules/.bin/eslint [0-9]*.js && jest"
+    "test": "./node_modules/mocha/bin/mocha"
   },
-  "author": "zak_4r1A",
+  "author": "",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
-    "chai": "^5.1.1",
-    "mocha": "^10.4.0"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "request": "^2.88.0",
+    "sinon": "^7.5.0"
   }
 }
