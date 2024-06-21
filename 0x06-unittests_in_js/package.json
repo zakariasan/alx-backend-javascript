@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "0x06-unittests_in_js",
   "version": "1.0.0",
   "description": "unittest in js try to fix again",
