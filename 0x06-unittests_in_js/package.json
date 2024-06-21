@@ -3,7 +3,7 @@
   "name": "0x06-unittests_in_js",
   "version": "1.0.0",
   "description": "unittest in js try to fix again",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint",
     "check-lint": "./node_modules/.bin/eslint [0-9]*.js",
