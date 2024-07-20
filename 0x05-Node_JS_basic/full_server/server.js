@@ -1,13 +1,12 @@
-import express from 'express';
-import router from './routes/index';
+import AppController from '../controllers/AppController';
+import StudentsController from '../controllers/StudentsController';
 
-const app = express();
-const PORT = 1245;
 
-app.use('/', router);
+const mapRoutes = (app) => {
+  app.get('/', AppController.getHomepage);
+  app.get('/students', StudentsController.getAllStudents);
+  app.get('/students/:major', StudentsController.getAllStudentsByMajor);
+};
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
-});
-
-export default app;
+export default mapRoutes;
+module.exports = mapRoutes;
