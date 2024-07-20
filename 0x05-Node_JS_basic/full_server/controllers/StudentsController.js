@@ -1,4 +1,4 @@
-import readDatabase from '../utils';
+import readDatabase from '../utils/utils';
 
 class StudentsController {
   static async getAllStudents(req, res) {
@@ -39,4 +39,4 @@ class StudentsController {
 }
 
 export default StudentsController;
-
+module.exports = StudentsController;
