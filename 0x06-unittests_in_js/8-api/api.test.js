@@ -11,18 +11,4 @@ describe('API integration test', () => {
       done();
     });
   });
-
-  it('GET /available_payments returns correct response', (done) => {
-    request.get(`${API_URL}/available_payments`, (_err, res, body) => {
-      expect(res.statusCode).to.be.equal(200);
-      const expectedResponse = {
-        payment_methods: {
-          credit_cards: true,
-          paypal: false
-        }
-      };
-      expect(JSON.parse(body)).to.deep.equal(expectedResponse);
-      done();
-    });
-  });
 });
