@@ -1,4 +1,4 @@
-import readDatabase from '../utils.js';
+import readDatabase from '../utils';
 
 class StudentsController {
   static async getAllStudents(req, res) {
@@ -9,7 +9,7 @@ class StudentsController {
       let responseText = 'This is the list of our students\n';
       const sortedFields = Object.keys(students).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
-      sortedFields.forEach(field => {
+      sortedFields.forEach((field) => {
         responseText += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
       });
 
