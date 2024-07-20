@@ -1,46 +1,49 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 
 /**
- * Reads the database asynchronously.
- * @param {string} filePath - The path to the CSV database file.
- * @returns {Promise<object>} A promise resolving to an object of arrays of first names per fields.
+ * Reads the data of students in a CSV data file.
+ * @param {string} filePath - The path to the database file.
+ * @returns {Promise<object>} - A promise that resolves to an object of arrays of student first names per field.
  */
-const readDatabase = (filePath) => new Promise((resolve, reject) => {
+const readDatabase = async (filePath) => {
   if (!filePath) {
-    reject(new Error('File path is missing.'));
-    return;
+    throw new Error('Cannot load the database');
   }
 
-  fs.readFile(filePath, 'utf-8', (err, data) => {
-    if (err) {
-      reject(new Error(`Cannot read database file: ${err.message}`));
-      return;
-    }
-
+  try {
+    const data = await fs.readFile(filePath, 'utf-8');
     const lines = data.trim().split('\n');
-    const fieldNames = lines[0].split(',');
-    const students = {};
+    const headers = lines[0].split(',');
+    const fields = headers.slice(0, -1);
+    const groups = {};
 
-    // Initialize student groups for each field
-    fieldNames.forEach((fieldName, index) => {
-      if (index < fieldNames.length - 1) {
-        students[fieldName] = [];
+    for (const line of lines.slice(1)) {
+      const values = line.split(',');
+      const student = values.slice(0, -1);
+      const field = values[values.length - 1];
+
+      if (!groups[field]) {
+        groups[field] = [];
       }
-    });
 
-    // Parse each line and add student first names to respective fields
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].split(',');
-      const firstName = line[0].trim();
-      const field = line[line.length - 1].trim();
+      const studentEntry = fields.reduce((acc, field, index) => {
+        acc[field] = student[index];
+        return acc;
+      }, {});
 
-      if (students[field]) {
-        students[field].push(firstName);
-      }
+      groups[field].push(studentEntry);
     }
 
-    resolve(students);
-  });
-});
+    const result = {};
+    for (const [field, students] of Object.entries(groups)) {
+      result[field] = students.map(student => student.firstname);
+    }
+
+    return result;
+  } catch (error) {
+    throw new Error('Cannot load the database');
+  }
+};
 
 export default readDatabase;
+
