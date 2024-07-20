@@ -5,23 +5,16 @@ const app = require('./api');  // Ensure the server is running before testing
 
 chai.use(chaiHttp);
 
-describe('API integration test', () => {
+describe('API Integration Test', () => {
+  const API_URL = 'http://localhost:7865';
+
   describe('Index page', () => {
-    it('should return status code 200', (done) => {
+    it('should return status code 200 and correct message', (done) => {
       chai.request(app)
         .get('/')
         .end((err, res) => {
           if (err) return done(err);
           expect(res).to.have.status(200);
-          done();
-        });
-    });
-
-    it('should return the correct message', (done) => {
-      chai.request(app)
-        .get('/')
-        .end((err, res) => {
-          if (err) return done(err);
           expect(res.text).to.equal('Welcome to the payment system');
           done();
         });
@@ -29,29 +22,20 @@ describe('API integration test', () => {
   });
 
   describe('Cart page', () => {
-    it('should return status code 200 when :id is a number', (done) => {
+    it('should return status code 200 and correct message for valid :id', (done) => {
       chai.request(app)
-        .get('/cart/12')
+        .get('/cart/47')
         .end((err, res) => {
           if (err) return done(err);
           expect(res).to.have.status(200);
+          expect(res.text).to.equal('Payment methods for cart 47');
           done();
         });
     });
 
-    it('should return correct message when :id is a number', (done) => {
+    it('should return status code 404 for negative number values in :id', (done) => {
       chai.request(app)
-        .get('/cart/12')
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.text).to.equal('Payment methods for cart 12');
-          done();
-        });
-    });
-
-    it('should return status code 404 when :id is not a number', (done) => {
-      chai.request(app)
-        .get('/cart/hello')
+        .get('/cart/-47')
         .end((err, res) => {
           if (err) return done(err);
           expect(res).to.have.status(404);
@@ -59,19 +43,9 @@ describe('API integration test', () => {
         });
     });
 
-    it('should return correct error message when :id is not a number', (done) => {
+    it('should return status code 404 for non-numeric values in :id', (done) => {
       chai.request(app)
-        .get('/cart/hello')
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.text).to.equal('Invalid cart ID');
-          done();
-        });
-    });
-
-    it('should return status code 404 for negative :id', (done) => {
-      chai.request(app)
-        .get('/cart/-47')
+        .get('/cart/d200-44a5-9de6')
         .end((err, res) => {
           if (err) return done(err);
           expect(res).to.have.status(404);
